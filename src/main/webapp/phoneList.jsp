@@ -1,12 +1,8 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<html>
-<head>
-    <meta http-equiv="Content-Type" content="text/html" charset="UTF-8">
-    <meta charset="UTF-8">
-    <title>Phone List</title>
-</head>
-<body>
+<%@ taglib prefix="t" tagdir="/WEB-INF/tags" %>
+
+<t:page title="Phone List">
 
 <style>
     td {
@@ -55,3 +51,4 @@
 
 </body>
 </html>
+</t:page>
