@@ -8,6 +8,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
 import java.io.IOException;
+import java.net.URLEncoder;
 
 public class ListServlet extends HttpServlet {
 
@@ -31,8 +32,9 @@ public class ListServlet extends HttpServlet {
                 req.getRequestDispatcher("phoneList.jsp").forward(req, resp);
                 break;
             case "favorite":
-                Cookie cookie = new Cookie("favorite", selectedRow);
-                resp.addCookie(cookie);
+                Cookie favoritePhone = new Cookie("id", URLEncoder.encode(selectedRow, "UTF-8"));
+                resp.addCookie(favoritePhone);
+                req.setAttribute("id", selectedRow);
                 req.setAttribute("phoneList", phoneService.findAll());
                 req.getRequestDispatcher("phoneList.jsp").forward(req, resp);
                 break;
