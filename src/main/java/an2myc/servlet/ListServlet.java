@@ -19,8 +19,12 @@ public class ListServlet extends HttpServlet {
     }
 
     @Override
-    public void doPost(HttpServletRequest req, HttpServletResponse resp){
-
+    public void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        req.setCharacterEncoding("UTF-8");
+        String selectedRow = req.getParameter("id");
+        phoneService.delete(Long.valueOf(selectedRow));
+        req.setAttribute("phoneList", phoneService.findAll());
+        req.getRequestDispatcher("phoneList.jsp").forward(req, resp);
     }
 
 }
