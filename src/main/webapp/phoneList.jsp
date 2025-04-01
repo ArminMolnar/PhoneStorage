@@ -43,7 +43,8 @@
             </td>
             <td>
                 <form method="POST" action="listServlet">
-                    <button type="submit">Delete</button>
+                    <button type="submit" name="action" value="delete">Delete</button>
+                    <button type="submit" name="action" value="favorite">Favorite</button>
                     <input type="hidden" name="id" value="${phone.id}"/>
                 </form>
             </td>
