@@ -1,4 +1,3 @@
-
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <html>
@@ -10,10 +9,11 @@
 <body>
 
 <style>
-    td{
-        border:1px solid black;
+    td {
+        border: 1px solid black;
     }
 </style>
+
 
 <table>
     <thead>
@@ -27,25 +27,28 @@
     </thead>
 
     <tbody>
-<c:forEach items="${phoneList}" var="phone">
-    <tr>
-        <td>
-            <c:out value="${phone.id}"/>
-        </td>
-        <td>
-            <c:out value="${phone.manufacturer}"/>
-        </td>
-        <td>
-            <c:out value="${phone.type}"/>
-        </td>
-        <td>
-            <c:out value="${phone.imei}"/>
-        </td>
-        <td>
-            <button type="submit">Delete</button>
-        </td>
-    </tr>
-</c:forEach>
+    <c:forEach items="${phoneList}" var="phone">
+        <tr>
+            <td>
+                <c:out value="${phone.id}"/>
+            </td>
+            <td>
+                <c:out value="${phone.manufacturer}"/>
+            </td>
+            <td>
+                <c:out value="${phone.type}"/>
+            </td>
+            <td>
+                <c:out value="${phone.imei}"/>
+            </td>
+            <td>
+                <form method="POST" action="listServlet">
+                    <button type="submit">Delete</button>
+                    <input type="hidden" name="id" value="${phone.id}"/>
+                </form>
+            </td>
+        </tr>
+    </c:forEach>
     </tbody>
 </table>
 
