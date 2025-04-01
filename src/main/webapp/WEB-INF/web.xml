@@ -25,4 +25,16 @@
         <url-pattern>/homeServlet</url-pattern>
     </servlet-mapping>
 
+
+    <servlet>
+        <servlet-name>AddPhone</servlet-name>
+        <servlet-class>an2myc.servlet.AddPhone</servlet-class>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>AddPhone</servlet-name>
+        <url-pattern>/addPhone</url-pattern>
+    </servlet-mapping>
+
+
 </web-app>
