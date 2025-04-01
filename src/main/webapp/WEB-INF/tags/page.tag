@@ -14,6 +14,9 @@
     <a href="${pageContext.request.contextPath}/listServlet">List</a>
 </div>
 <div>
+    <a href="${pageContext.request.contextPath}//addPhone">Add</a>
+</div>
+<div>
     <jsp:doBody/>
 </div>
 </body>
