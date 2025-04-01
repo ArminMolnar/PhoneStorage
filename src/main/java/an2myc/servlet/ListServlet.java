@@ -15,7 +15,7 @@ public class ListServlet extends HttpServlet {
     @Override
     public void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
             req.setAttribute("phoneList", phoneService.findAll());
-            req.getRequestDispatcher("phoneList.jps").forward(req, resp);
+            req.getRequestDispatcher("phoneList.jsp").forward(req, resp);
     }
 
     @Override
