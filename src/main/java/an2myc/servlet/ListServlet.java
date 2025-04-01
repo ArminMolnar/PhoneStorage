@@ -1,14 +1,21 @@
 package an2myc.servlet;
 
+import an2myc.service.PhoneService;
+import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
+import java.io.IOException;
+
 public class ListServlet extends HttpServlet {
 
-    @Override
-    public void doGet(HttpServletRequest req, HttpServletResponse resp){
+    private static final PhoneService phoneService = new PhoneService();
 
+    @Override
+    public void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+            req.setAttribute("phoneList", phoneService.findAll());
+            req.getRequestDispatcher("phoneList.jps").forward(req, resp);
     }
 
     @Override
