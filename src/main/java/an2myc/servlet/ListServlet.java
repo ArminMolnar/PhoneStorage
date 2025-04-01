@@ -2,6 +2,7 @@ package an2myc.servlet;
 
 import an2myc.service.PhoneService;
 import jakarta.servlet.ServletException;
+import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -14,17 +15,27 @@ public class ListServlet extends HttpServlet {
 
     @Override
     public void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-            req.setAttribute("phoneList", phoneService.findAll());
-            req.getRequestDispatcher("phoneList.jsp").forward(req, resp);
+        req.setAttribute("phoneList", phoneService.findAll());
+        req.getRequestDispatcher("phoneList.jsp").forward(req, resp);
     }
 
     @Override
     public void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         req.setCharacterEncoding("UTF-8");
         String selectedRow = req.getParameter("id");
-        phoneService.delete(Long.valueOf(selectedRow));
-        req.setAttribute("phoneList", phoneService.findAll());
-        req.getRequestDispatcher("phoneList.jsp").forward(req, resp);
-    }
 
+        switch (req.getParameter("action")) {
+            case "delete":
+                phoneService.delete(Long.valueOf(selectedRow));
+                req.setAttribute("phoneList", phoneService.findAll());
+                req.getRequestDispatcher("phoneList.jsp").forward(req, resp);
+                break;
+            case "favorite":
+                Cookie cookie = new Cookie("favorite", selectedRow);
+                resp.addCookie(cookie);
+                req.setAttribute("phoneList", phoneService.findAll());
+                req.getRequestDispatcher("phoneList.jsp").forward(req, resp);
+                break;
+        }
+    }
 }
