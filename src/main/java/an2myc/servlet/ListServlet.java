@@ -16,8 +16,7 @@ public class ListServlet extends HttpServlet {
 
     @Override
     public void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        req.setAttribute("phoneList", phoneService.findAll());
-        req.getRequestDispatcher("phoneList.jsp").forward(req, resp);
+        displayList(req, resp);
     }
 
     @Override
@@ -28,16 +27,19 @@ public class ListServlet extends HttpServlet {
         switch (req.getParameter("action")) {
             case "delete":
                 phoneService.delete(Long.valueOf(selectedRow));
-                req.setAttribute("phoneList", phoneService.findAll());
-                req.getRequestDispatcher("phoneList.jsp").forward(req, resp);
+                displayList(req, resp);
                 break;
             case "favorite":
                 Cookie favoritePhone = new Cookie("id", URLEncoder.encode(selectedRow, "UTF-8"));
                 resp.addCookie(favoritePhone);
                 req.setAttribute("id", selectedRow);
-                req.setAttribute("phoneList", phoneService.findAll());
-                req.getRequestDispatcher("phoneList.jsp").forward(req, resp);
+                displayList(req, resp);
                 break;
         }
+    }
+
+    private void displayList(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        req.setAttribute("phoneList", phoneService.findAll());
+        req.getRequestDispatcher("phoneList.jsp").forward(req, resp);
     }
 }
