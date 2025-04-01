@@ -1,6 +1,5 @@
 package an2myc.tag;
 
-import an2myc.model.Phone;
 import an2myc.service.PhoneService;
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
@@ -13,6 +12,7 @@ import java.io.IOException;
 public class FavoritePhone extends SimpleTagSupport {
 
     private static final PhoneService phoneService = new PhoneService();
+
     @Override
     public void doTag() throws IOException {
         var context = (PageContext) this.getJspContext();
@@ -20,26 +20,24 @@ public class FavoritePhone extends SimpleTagSupport {
         JspWriter out = this.getJspContext().getOut();
 
         String phoneId = request.getParameter("id");
+        if (phoneId == null) {
+            phoneId = getCookieValue(request.getCookies(), "id");
+        }
 
-        if(phoneId == null){
-            Cookie[] cookies = request.getCookies();
-            if(cookies != null){
-                for(Cookie cookie : cookies){
-                    if("id".equals(cookie.getName())){
-                        phoneId = cookie.getValue();
-                        break;
-                    }
+        if (phoneId != null) {
+            var phone = phoneService.findById(Long.parseLong(phoneId));
+            out.println(phone != null ? "Favorite phone: " + phone.getManufacturer() + " " + phone.getType() + " " + phone.getImei() : "You don't have a favorite phone");
+        }
+    }
+
+    private String getCookieValue(Cookie[] cookies, String cookieName) {
+        if (cookies != null) {
+            for (Cookie cookie : cookies) {
+                if (cookieName.equals(cookie.getName())) {
+                    return cookie.getValue();
                 }
             }
         }
-
-        if(phoneId != null){
-            Phone phone = phoneService.findById(Long.parseLong(phoneId));
-            if(phone != null){
-                out.println("Favorite phone: " + phone.getManufacturer() + " " + phone.getType() + " "  + phone.getImei());
-            }else{
-                out.println("You don't have a favorite phone.");
-            }
-        }
+        return null;
     }
 }
